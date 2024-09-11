@@ -6,24 +6,28 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script>
-        // Comprehensive device detection method
-        function detectMobileDevice() {
-            // User Agent to detect specific brands and models
+        // Detect if the user is on a mobile device
+        function detectDevice() {
             var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            var isMobile = false;
 
-            // Mobile device detection based on user agent matching
-            var isMobileDevice = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini|Samsung|OnePlus|Oppo|Vivo|Redmi|Nokia|Sony|LG|HTC/i.test(userAgent);
-            
-            // Additionally, check if the window width is less than or equal to 768px
-            if (isMobileDevice || (window.innerWidth <= 768)) {
-                // If mobile is detected, display a message
+            // Check for common iPhone models and Android brands
+            var mobileRegex = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini|Samsung|OnePlus|Oppo|Vivo|Redmi|Huawei|Nokia/i;
+
+            // Check screen width for additional mobile device detection (especially for tablets)
+            if (mobileRegex.test(userAgent) || window.innerWidth <= 768) {
+                isMobile = true;
+            }
+
+            if (isMobile) {
+                // Redirect to a different page or display a message
                 document.body.innerHTML = '<h1>This website is only accessible on a laptop or desktop device.</h1>';
                 document.body.style.textAlign = 'center';
                 document.body.style.marginTop = '20%';
             }
         }
 
-        window.onload = detectMobileDevice;
+        window.onload = detectDevice;
     </script>
 </head> 
 <body>
