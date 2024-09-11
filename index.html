@@ -6,28 +6,30 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script>
-        // Detect if the user is on a mobile device
-        function detectDevice() {
-            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-            var isMobile = false;
+        // Function to detect mobile devices using three different methods
+        function isMobileDevice() {
+            // Method 1: User-Agent detection for common mobile devices
+            var userAgentCheck = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Samsung|OnePlus|Oppo|Vivo|Redmi/i.test(navigator.userAgent);
+            
+            // Method 2: Screen size check (max-width of 760px typically indicates a mobile device)
+            var screenSizeCheck = window.matchMedia("only screen and (max-width: 760px)").matches;
+            
+            // Method 3: Touch event detection (mobile devices usually support touch events)
+            var touchEventCheck = 'ontouchstart' in document.documentElement;
 
-            // Check for common iPhone models and Android brands
-            var mobileRegex = /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini|Samsung|OnePlus|Oppo|Vivo|Redmi|Huawei|Nokia/i;
+            // If any of these checks return true, it's likely a mobile device
+            return userAgentCheck || screenSizeCheck || touchEventCheck;
+        }
 
-            // Check screen width for additional mobile device detection (especially for tablets)
-            if (mobileRegex.test(userAgent) || window.innerWidth <= 768) {
-                isMobile = true;
-            }
-
-            if (isMobile) {
-                // Redirect to a different page or display a message
+        // Run the mobile detection function on page load
+        window.onload = function() {
+            if (isMobileDevice()) {
+                // If a mobile device is detected, show a message and block access
                 document.body.innerHTML = '<h1>This website is only accessible on a laptop or desktop device.</h1>';
                 document.body.style.textAlign = 'center';
                 document.body.style.marginTop = '20%';
             }
         }
-
-        window.onload = detectDevice;
     </script>
 </head> 
 <body>
